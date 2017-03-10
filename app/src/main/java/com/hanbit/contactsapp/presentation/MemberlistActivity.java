@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.hanbit.contactsapp.R;
 import com.hanbit.contactsapp.dao.ListQuery;
 import com.hanbit.contactsapp.domain.MemberBean;
-import com.hanbit.contactsapp.domain.T;
 import com.hanbit.contactsapp.service.ListService;
 
 import java.util.ArrayList;
@@ -29,12 +28,12 @@ public class MemberlistActivity extends AppCompatActivity {
                 final MemberList mlist=new MemberList(MemberlistActivity.this);
                 ListService service = new ListService() {
                     @Override
-                    public ArrayList<T> list() {
-                        ArrayList<T>list=mlist.list("SELECT _id AS id,name,phone,age,address,salary FROM Member;");
+                    public ArrayList<?> list() {
+                        ArrayList<?>list=mlist.list("SELECT _id AS id,name,phone,age,address,salary FROM Member;");
                         return list;
                     }
                 };
-                ArrayList<T>list=service.list();
+                ArrayList<?>list=service.list();
                 Toast.makeText(MemberlistActivity.this,((MemberBean)list.get(0)).getName(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MemberlistActivity.this,MemberdetailActivity.class);
                 intent.putExtra("id",((MemberBean)list.get(0)).getId());
@@ -47,8 +46,8 @@ public class MemberlistActivity extends AppCompatActivity {
             super(context);
         }
         @Override
-        public ArrayList<T> list(String sql){
-            ArrayList<T> list=new ArrayList<>();
+        public ArrayList<?> list(String sql){
+            ArrayList<MemberBean> list=new ArrayList<>();
             SQLiteDatabase db=super.getDatabase();
             Cursor cursor=db.rawQuery(sql,null);
             MemberBean bean = null;

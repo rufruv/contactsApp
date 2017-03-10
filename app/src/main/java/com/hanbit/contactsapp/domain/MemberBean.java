@@ -4,7 +4,7 @@ package com.hanbit.contactsapp.domain;
  * Created by hb2002 on 2017-03-08.
  */
 
-public class MemberBean extends T {
+public class MemberBean {
     protected String id,name,phone,age,address,salary;
 
     public String getId() {
