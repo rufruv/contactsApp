@@ -21,7 +21,7 @@ public class MemberdetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MemberdetailActivity.this, "ID is "+id, Toast.LENGTH_LONG).show();
-              //  startActivity(new Intent(MemberdetailActivity.this, MemberaddActivity.class));
+                startActivity(new Intent(MemberdetailActivity.this, MemberaddActivity.class));
             }
         });
     }

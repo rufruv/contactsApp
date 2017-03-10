@@ -4,15 +4,15 @@ package com.hanbit.contactsapp.domain;
  * Created by hb2002 on 2017-03-08.
  */
 
-public class MemberBean {
-    protected String seq, name, phone, addr;
+public class MemberBean extends T {
+    protected String id,name,phone,age,address,salary;
 
-    public String getSeq() {
-        return seq;
+    public String getId() {
+        return id;
     }
 
-    public void setSeq(String seq) {
-        this.seq = seq;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -23,6 +23,30 @@ public class MemberBean {
         this.name = name;
     }
 
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -31,21 +55,15 @@ public class MemberBean {
         this.phone = phone;
     }
 
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
-
     @Override
     public String toString() {
         return "MemberBean{" +
-                "seq='" + seq + '\'' +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", addr='" + addr + '\'' +
+                ", age='" + age + '\'' +
+                ", address='" + address + '\'' +
+                ", salary='" + salary + '\'' +
                 '}';
     }
 }
