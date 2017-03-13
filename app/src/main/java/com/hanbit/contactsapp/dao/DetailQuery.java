@@ -10,12 +10,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public abstract  class DetailQuery extends QueryFactory{
     SQLiteOpenHelper helper;
-    public DetailQuery(Context context) {
+    public  DetailQuery(Context context){
         super(context);
+        helper=new DatabaseHelper(context);
     }
     @Override
     public SQLiteDatabase getDatabase(){
         return helper.getReadableDatabase();
     }
-    public abstract Object detail(String sql);
+    public abstract Object findOne(String sql);
 }

@@ -19,7 +19,7 @@
         <activity android:name=".presentation.MemberlistActivity" />
         <activity android:name=".presentation.MemberdetailActivity" />
         <activity android:name=".presentation.MemberupdateActivity" />
-        <activity android:name=".presentation.MemberaddActivity"></activity>
+        <activity android:name=".presentation.MemberaddActivity" />
     </application>
 
 </manifest>
