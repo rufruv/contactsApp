@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,9 @@ import com.hanbit.contactsapp.dao.DetailQuery;
 import com.hanbit.contactsapp.domain.MemberBean;
 import com.hanbit.contactsapp.service.DetailService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MemberdetailActivity extends AppCompatActivity {
@@ -28,13 +31,15 @@ public class MemberdetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberdetail);
+        Context context = MemberdetailActivity.this;
         Intent intent = this.getIntent();
         final String id = intent.getExtras().getString("id");
         Map<String, String> map = new HashMap<>();
         map.put("id", id);
-        final MemberDetail mDetail = new MemberDetail(this);
+        final MemberDetail mDetail = new MemberDetail(context);
+        List<Button>buttons = new ArrayList<>();
+        buttons.add((Button) findViewById(R.id.btDial));
 
-        Toast.makeText(MemberdetailActivity.this, map.get("id"), Toast.LENGTH_LONG).show();
         DetailService service = new DetailService() {
             @Override
             public Object findOne(Map<?, ?> map) {
@@ -58,34 +63,9 @@ public class MemberdetailActivity extends AppCompatActivity {
         TextView tvSalary = (TextView) findViewById(R.id.tvSalary);
         tvSalary.setText(member.getSalary());
 
+        map.put("phoneNO", member.getPhone());
+        new ButtonObserver(context,buttons,map).onClick(findViewById(android.R.id.content));
         // Toast.makeText(MemberdetailActivity.this,member.getName(),Toast.LENGTH_LONG).show();
-        findViewById(R.id.btDial).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: " + member.getPhone()));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-        findViewById(R.id.btCall).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + member.getPhone()));
-                if(ActivityCompat.checkSelfPermission(MemberdetailActivity.this, Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(MemberdetailActivity.this,new String[]{
-                            Manifest.permission.CALL_PHONE
-                    },2);
-                }
-            }
-        });
-        findViewById(R.id.btUpdate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MemberdetailActivity.this, "ID is " + id, Toast.LENGTH_LONG).show();
-                startActivity(new Intent(MemberdetailActivity.this, MemberaddActivity.class));
-            }
-        });
 
     }
 
@@ -113,6 +93,47 @@ public class MemberdetailActivity extends AppCompatActivity {
                 }
             }
             return bean;
+        }
+    }
+    class ButtonObserver implements View.OnClickListener{
+        Context context;
+        Map<?,?>map;
+        List<Button>buttons;
+
+
+        public ButtonObserver(Context context, List<Button> buttons, Map<?, ?> map) {
+            this.context = context;
+            this.map = map;
+            this.buttons = buttons;
+            for(Button b:buttons){
+                b.setOnClickListener(this);
+            }
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            Intent intent;
+            switch (v.getId()){
+                case R.id.btDial:
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: " + map.get("phoneNO")));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    break;
+                case R.id.btCall:
+                    intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + map.get("phoneNO")));
+                    if(ActivityCompat.checkSelfPermission(MemberdetailActivity.this, Manifest.permission.CALL_PHONE)
+                            != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(MemberdetailActivity.this,new String[]{
+                                Manifest.permission.CALL_PHONE
+                        },2);
+                    }
+                    break;
+                case R.id.btUpdate:
+                    Toast.makeText(MemberdetailActivity.this, "ID is " + map.get("id"), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(MemberdetailActivity.this, MemberaddActivity.class));
+                    break;
+            }
         }
     }
 }
