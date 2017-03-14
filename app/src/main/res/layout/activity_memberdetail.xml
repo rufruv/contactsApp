@@ -136,20 +136,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:id="@+id/btDial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:text="DIAL"
+            />
+        <Button
             android:id="@+id/btCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:text="전화걸기"
-            />
-        <Button
-            android:id="@+id/btPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:text="전화번호보기"
+            android:text="CALL"
             />
     </LinearLayout>
     <LinearLayout

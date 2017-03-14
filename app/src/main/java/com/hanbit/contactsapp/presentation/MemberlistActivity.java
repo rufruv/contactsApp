@@ -14,7 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hanbit.contactsapp.R;
 import com.hanbit.contactsapp.dao.ListQuery;
@@ -41,7 +40,7 @@ public class MemberlistActivity extends AppCompatActivity {
             }
         };
         ArrayList<?>list=service.list();
-        Toast.makeText(MemberlistActivity.this,((MemberBean)list.get(0)).getName(), Toast.LENGTH_LONG).show();
+        //  Toast.makeText(MemberlistActivity.this,((MemberBean)list.get(0)).getName(), Toast.LENGTH_LONG).show();
         listView.setAdapter(new MemberAdapter(list,this));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
