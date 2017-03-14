@@ -39,7 +39,7 @@ public class MemberdetailActivity extends AppCompatActivity {
         final MemberDetail mDetail = new MemberDetail(context);
         List<Button>buttons = new ArrayList<>();
         buttons.add((Button) findViewById(R.id.btDial));
-
+        buttons.add((Button) findViewById(R.id.btUpdate));
         DetailService service = new DetailService() {
             @Override
             public Object findOne(Map<?, ?> map) {
@@ -65,8 +65,6 @@ public class MemberdetailActivity extends AppCompatActivity {
 
         map.put("phoneNO", member.getPhone());
         new ButtonObserver(context,buttons,map).onClick(findViewById(android.R.id.content));
-        // Toast.makeText(MemberdetailActivity.this,member.getName(),Toast.LENGTH_LONG).show();
-
     }
 
     class MemberDetail extends DetailQuery{
@@ -97,13 +95,13 @@ public class MemberdetailActivity extends AppCompatActivity {
     }
     class ButtonObserver implements View.OnClickListener{
         Context context;
-        Map<?,?>map;
+        Map<String,String>map;
         List<Button>buttons;
 
 
-        public ButtonObserver(Context context, List<Button> buttons, Map<?, ?> map) {
+        public ButtonObserver(Context context, List<Button> buttons, Map<?,?> map) {
             this.context = context;
-            this.map = map;
+            this.map = (Map<String, String>) map;
             this.buttons = buttons;
             for(Button b:buttons){
                 b.setOnClickListener(this);
@@ -116,22 +114,25 @@ public class MemberdetailActivity extends AppCompatActivity {
             Intent intent;
             switch (v.getId()){
                 case R.id.btDial:
+                    Toast.makeText(context,"Call",Toast.LENGTH_LONG).show();
                     intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: " + map.get("phoneNO")));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     break;
                 case R.id.btCall:
+                    Toast.makeText(context,"Call",Toast.LENGTH_LONG).show();
                     intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + map.get("phoneNO")));
                     if(ActivityCompat.checkSelfPermission(MemberdetailActivity.this, Manifest.permission.CALL_PHONE)
-                            != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(MemberdetailActivity.this,new String[]{
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MemberdetailActivity.this, new String[]{
                                 Manifest.permission.CALL_PHONE
-                        },2);
+                        }, 2);
                     }
                     break;
                 case R.id.btUpdate:
-                    Toast.makeText(MemberdetailActivity.this, "ID is " + map.get("id"), Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MemberdetailActivity.this, MemberaddActivity.class));
+                    intent = new Intent(context,MemberupdateActivity.class);
+                    intent.putExtra("id",map.get("id"));
+                    startActivity(intent);
                     break;
             }
         }
