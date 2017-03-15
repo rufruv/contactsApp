@@ -12,6 +12,7 @@ import com.hanbit.contactsapp.dao.DetailQuery;
 import com.hanbit.contactsapp.dao.UpdateQuery;
 import com.hanbit.contactsapp.domain.MemberBean;
 import com.hanbit.contactsapp.service.DetailService;
+import com.hanbit.contactsapp.service.UpdateService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +31,17 @@ public class MemberupdateActivity extends AppCompatActivity {
         DetailService service = new DetailService() {
             @Override
             public Object findOne(Map<?, ?> map) {
-                String sql = String.format("","");
+                String sql = String.format("SELECT _id AS id,name,age,address,salary from Member WHERE _id='%s'",map.get("id"));
                 MemberBean member = (MemberBean) detail.findOne(sql);
                 return member;
+            }
+        };
+        map.put("id",id);
+        final MemberBean member = (MemberBean) service.findOne(map);
+        UpdateService Uservice = new UpdateService() {
+            @Override
+            public void update(Object o) {
+
             }
         };
     }

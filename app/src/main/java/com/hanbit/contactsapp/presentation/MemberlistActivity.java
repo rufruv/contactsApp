@@ -40,7 +40,6 @@ public class MemberlistActivity extends AppCompatActivity {
             }
         };
         ArrayList<?>list=service.list();
-        //  Toast.makeText(MemberlistActivity.this,((MemberBean)list.get(0)).getName(), Toast.LENGTH_LONG).show();
         listView.setAdapter(new MemberAdapter(list,this));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
